@@ -1,3 +1,62 @@
-<ion-content [fullscreen]="true">
-  <ion-button (click)="addWine()" color="primary">Ajouter un vin</ion-button>
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div class="header">
+    <p class="header__small-text">Visualisation</p>
+    <h1 class="header__title">Votre cave</h1>
+  </div>
+
+  <div class="cellar-info">
+    <div class="cellar-info__total">{{ caveService.occupiedCount ?? 0 }} / {{ caveService.totalCapacity ?? 0 }}</div>
+    <div class="cellar-info__sub">emplacements occupés</div>
+  </div>
+
+  @if (grid$ | async; as grid) {
+    @if (caveConfig) {
+      @if (caveConfig.viewMode === 'grid') {
+        <ion-grid class="cellar-grid">
+          <ion-row>
+            @for (slot of grid; track slot.row + '-' + slot.col) {
+              <ion-col [size]="12 / caveConfig.cols">
+                <app-cellar-cell
+                  [positionLabel]="formatCoords(slot)"
+                  [wineType]="slot.wine?.type ?? null"
+                  (cellTap)="onCellTap(slot)">
+                </app-cellar-cell>
+              </ion-col>
+            }
+          </ion-row>
+        </ion-grid>
+      } @else {
+        <ion-list class="cellar-list">
+          @for (slot of grid; track slot.row + '-' + slot.col) {
+            @if (slot.wine) {
+              <ion-item [button]="true" (click)="onCellTap(slot)" class="wine-item" [detail]="true">
+                <ion-thumbnail slot="start">
+                  <img [src]="slot.wine.type ? 'assets/bottle_' + slot.wine.type + '.svg' : 'assets/bottle_red.svg'" />
+                </ion-thumbnail>
+                <ion-label>
+                  <h2>{{ slot.wine.name }}</h2>
+                  <p>{{ slot.wine.domain }} · {{ slot.wine.vintage }} · {{ slot.wine.region }}</p>
+                </ion-label>
+                <div slot="end" class="wine-right">
+                  <span class="wine-loc">{{ formatCoords(slot) }}</span>
+                  <span class="wine-qty">{{ slot.wine.placements?.length || 1 }} btl</span>
+                </div>
+              </ion-item>
+            } @else {
+              <ion-item [button]="true" (click)="onCellTap(slot)" class="wine-empty">
+                <span class="wine-empty-loc">{{ formatCoords(slot) }}</span> Emplacement vide
+              </ion-item>
+            }
+          }
+        </ion-list>
+      }
+    }
+  }
+
+  <app-wine-sheet-modal
+    [(isOpen)]="isSheetOpen"
+    [wine]="wine"
+    [coords]="coords"
+    [canRemoveBottle]="true">
+  </app-wine-sheet-modal>
 </ion-content>

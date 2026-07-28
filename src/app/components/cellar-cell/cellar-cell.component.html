@@ -1,0 +1,15 @@
+<button
+  type="button"
+  class="cellar-cell"
+  [class.cellar-cell--empty]="isEmpty"
+  [style.background]="bodyVar"
+  (click)="cellTap.emit()">
+
+  @if (isEmpty) {
+    <span class="cellar-cell__add">+</span>
+  } @else {
+    <img class="cellar-cell__bottle" [src]="WINE_TYPE_CONFIG[wineType || 'red'].icon"/>
+  }
+
+  <span class="cellar-cell__pos" [style.color]="(isDarkMode$ | async) ? 'var(--ion-color-secondary-contrast)' : 'var(--mc-accent)'">{{ positionLabel }}</span>
+</button>
