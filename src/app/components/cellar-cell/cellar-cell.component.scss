@@ -42,8 +42,9 @@
 }
  
 .cellar-cell__bottle {
-  width: 34px;
-  height: 48px;
+  width: 35%;
+  height: auto;
+  object-fit: contain;
 }
  
 .cellar-cell__pos {
