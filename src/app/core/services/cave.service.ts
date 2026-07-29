@@ -192,12 +192,6 @@ export class CaveService {
     return this.cave.reduce((total, wine) => total + (wine.placements?.length ?? 0), 0);
   }
 
-  getWineAt(row: number, col: number): UserWine | null {
-    return this.cave.find(wine =>
-      wine.placements?.some(p => p.row === row && p.col === col)
-    ) ?? null;
-  }
-
   get totalBottles(): number {
     return this.cave.reduce((total, wine) => total + wine.placements.length, 0);
   }
