@@ -1,4 +1,4 @@
-package fr.nikho.macave;
+package fr.nikho.vinum;
 
 import com.getcapacitor.BridgeActivity;
 

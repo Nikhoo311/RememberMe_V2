@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:161787533144:android:15b07b6308a08fe687772d",
+        "mobilesdk_app_id": "1:161787533144:android:5af79ae4e46fa3c887772d",
         "android_client_info": {
-          "package_name": "fr.nikho.macave"
+          "package_name": "fr.nikho.vinum"
         }
       },
       "oauth_client": [

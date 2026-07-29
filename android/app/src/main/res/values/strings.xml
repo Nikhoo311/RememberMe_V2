@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">Ma Cave</string>
-    <string name="title_activity_main">Ma Cave</string>
-    <string name="package_name">fr.nikho.macave</string>
-    <string name="custom_url_scheme">fr.nikho.macave</string>
+    <string name="app_name">Vinum</string>
+    <string name="title_activity_main">Vinum</string>
+    <string name="package_name">fr.nikho.vinum</string>
+    <string name="custom_url_scheme">fr.nikho.vinum</string>
 </resources>
