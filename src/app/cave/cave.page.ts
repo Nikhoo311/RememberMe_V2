@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
-import { Observable, map, retry } from 'rxjs';
+import { Observable, map, Subscription } from 'rxjs';
 import { CaveService, CaveSlot } from '../core/services/cave.service';
 import { CellarCellComponent } from '../components/cellar-cell/cellar-cell.component';
 import { UserWine } from '../core/models/wine.model';
@@ -9,6 +9,8 @@ import { AuthService } from '../core/services/auth.service';
 import { User } from '../core/models/user.model';
 import { WineSheetModalComponent } from '../components/wine-sheet-modal/wine-sheet-modal.component';
 import { WINE_TYPE_CONFIG, WineType } from '../core/types/WineType';
+import { SearchBarComponent, SearchableItem } from '../components/search-bar/search-bar.component';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-cave',
@@ -19,20 +21,49 @@ import { WINE_TYPE_CONFIG, WineType } from '../core/types/WineType';
     CommonModule,
     IonicModule,
     CellarCellComponent,
-    WineSheetModalComponent
+    WineSheetModalComponent,
+    SearchBarComponent,
+    TranslocoPipe
   ],
 })
-export class CavePage implements OnInit {
+export class CavePage implements OnInit, OnDestroy {
   grid$!: Observable<CaveSlot[]>;
   isSheetOpen = false;
   wine: UserWine | null = null;
   coords: { row: number; col: number } | null = null;
   readonly WINE_TYPE_CONFIG = WINE_TYPE_CONFIG;
+  searchableItems: SearchableItem[] = [];
+  matchedIds = new Set<string>();
+  private caveSubscription?: Subscription;
 
   constructor(public caveService: CaveService, private auth: AuthService) {}
 
   ngOnInit() {
     this.grid$ = this.caveService.grid$;
+    this.updateSearchableItems();
+    this.caveSubscription = this.caveService.grid$.subscribe(() => {
+      this.updateSearchableItems();
+    });
+  }
+
+  ngOnDestroy() {
+    this.caveSubscription?.unsubscribe();
+  }
+
+  updateSearchableItems() {
+    const wines = this.caveService.cave;
+    this.searchableItems = wines.map(wine => ({
+      id: wine.id || '',
+      label: wine.name,
+      subtitle: `${wine.domain} · ${wine.vintage}`,
+      tag: wine.placements?.map(p => this.caveService.formatPlacementCoords(p)).join(', '),
+      keywords: [wine.name, wine.domain, wine.region, wine.appellation, wine.grapeVariety],
+      placementCount: wine.placements?.length || 1
+    }));
+  }
+
+  onSearchMatch(matchedIds: Set<string>) {
+    this.matchedIds = matchedIds;
   }
 
   get occupiedCount() {
@@ -73,7 +104,7 @@ export class CavePage implements OnInit {
       appellation: "Tavel",
       type: "red",
       grapeVariety: "Roussanne",
-      vintage: 2025,
+      vintage: 2015,
       description:"Robe jaune or aux reflets dorés. Bouquet complexe de fruits à chair blanche, de miel et de pain grillé. Bouche riche et ample, belle longueur.",
 
       foodPairing: [
@@ -87,6 +118,8 @@ export class CavePage implements OnInit {
         ownerId: this.user?.id,
         placements: [ {col: y, row: x}]
     } as UserWine;
-      this.caveService.addWine(wine)
+      this.caveService.addWine(wine).then(() => {
+        this.updateSearchableItems();
+      });
   }
 }

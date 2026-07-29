@@ -55,7 +55,12 @@ export class CaveService {
     const user = this.authService.currentUser;
     if (!user || !user.id) throw new Error("Utilisateur non connecté.");
 
-    const existingWine = this.cave.find(w => w.name === wine.name);
+    const existingWine = this.cave.find(w =>
+      w.name === wine.name &&
+      w.domain === wine.domain &&
+      w.vintage === wine.vintage &&
+      w.appellation === wine.appellation
+    );
 
     if (existingWine && existingWine.id) {
       const updatedPlacements = [...(existingWine.placements || []), wine.placements![0]];

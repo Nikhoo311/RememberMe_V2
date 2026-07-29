@@ -89,6 +89,20 @@
     "STATS": "Stats",
     "SETTINGS": "Réglages"
   },
+  "CAVE": {
+    "VISUALIZATION": "Visualisation",
+    "TITLE": "Votre cave",
+    "OCCUPIED_SLOTS": "emplacements occupés",
+    "EMPTY_LOCATION": "Emplacement vide",
+    "SEARCH": {
+      "PLACEHOLDER": "Rechercher un vin…",
+      "NO_RESULTS": "Aucun résultat pour « {{query}} »",
+      "BOTTLES_FOUND": "{count, plural, =0 {0 bouteille trouvée} =1 {1 bouteille trouvée} other {{{count}} bouteilles trouvées}}"
+    }
+  },
+  "COMMON": {
+    "BOTTLES_SHORT": "btl"
+  },
   "HOME": {
     "TITLE": "Accueil",
     "WELCOME": "Bonjour",
@@ -123,8 +137,7 @@
     "NO_FOOD_PAIRING": "Aucun accord disponible.",
     "REGION_NOT_SPECIFIED": "Région non spécifiée",
     "CLOSE": "Fermer",
-    "REMOVE_BOTTLE": "Retirer une bouteille",
-    "BOTTLES_SHORT": "btl"
+    "REMOVE_BOTTLE": "Retirer une bouteille"
   },
   "SETTINGS": {
     "TITLE": "Paramètres",
