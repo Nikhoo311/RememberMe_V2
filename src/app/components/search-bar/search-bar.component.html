@@ -1,0 +1,30 @@
+<ion-searchbar
+  [value]="query()"
+  (ionInput)="onInput($event)"
+  (ionClear)="clear()"
+  [placeholder]="'CAVE.SEARCH.PLACEHOLDER' | transloco"
+  showClearButton="focus"
+  animated="false"
+  mode="md">
+</ion-searchbar>
+
+@if (hasQuery()) {
+  <div class="search-result" [class.empty]="results().length === 0">
+    @if (results().length === 0) {
+      {{ 'CAVE.SEARCH.NO_RESULTS' | transloco: { query: query() } }}
+    } @else if (results().length === 1) {
+      @if (results()[0].tag) {
+        <span class="pin">{{ results()[0].tag }}</span>
+      }
+      {{ results()[0].label }}
+      @if (results()[0].subtitle) {
+        · {{ results()[0].subtitle }}
+      }
+    } @else {
+      {{ 'CAVE.SEARCH.BOTTLES_FOUND' | transloco: { count: totalPlacementCount() } }}
+      @if (allResultTags()) {
+        · {{ allResultTags() }}
+      }
+    }
+  </div>
+}

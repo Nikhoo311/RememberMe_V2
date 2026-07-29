@@ -13,6 +13,7 @@ import { CaveView } from '../core/models/user.model';
 import { CustomModalComponent } from '../components/custom-modal/custom-modal.component';
 import { StepperComponent } from '../components/stepper/stepper.component';
 import { ToastService } from '../core/services/toast.service';
+import { CaveService } from '../core/services/cave.service';
 
 @Component({
   selector: 'app-settings',
@@ -46,6 +47,7 @@ export class SettingsPage implements OnInit {
   constructor(
     private router: Router,
     private auth: AuthService,
+    private caveService: CaveService,
     private prefs: PreferencesService,
     private fb: FormBuilder,
     private toastService: ToastService,
@@ -115,7 +117,8 @@ export class SettingsPage implements OnInit {
     const rows = this.dispositionForm.get('rows')?.value;
     const cols = this.dispositionForm.get('cols')?.value;
 
-    await this.auth.updateCaveConfig({ rows, cols })
+    await this.caveService.pruneOutOfBoundsPlacements(rows, cols)
+      .then(() => this.auth.updateCaveConfig({ rows, cols }))
       .then(() => {
         this.toastService.success(
           this.transloco.translate('SETTINGS.CAVE.DISPOSITION.MODAL.SAVE_SUCCESS')

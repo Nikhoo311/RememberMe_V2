@@ -50,8 +50,7 @@ export class HomePage implements OnInit {
   }
 
   get wineCaveFillPercentage(): string {
-    const config = this.caveService.caveConfig;
-    const totalSlots = (config?.cols || 0) * (config?.rows || 0);
+    const totalSlots = this.caveService.totalCapacity;
     const percentage = totalSlots > 0 ? (this.totalBottles / totalSlots) * 100 : 0;
     return percentage.toFixed(2)
   }

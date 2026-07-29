@@ -35,6 +35,10 @@ export class AuthService {
   get currentUser(): User | null {
     return this.currentUserSubject.value;
   }
+
+  get currentUser$() {
+    return this.currentUserSubject.asObservable();
+  }
  
   // ── Authentification ──────────────────────────────────────
  

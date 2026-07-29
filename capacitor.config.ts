@@ -1,8 +1,8 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'fr.nikho.macave',
-  appName: 'Ma Cave',
+  appId: 'fr.nikho.vinum',
+  appName: 'Vinum',
   webDir: 'www',
   plugins: {
     FirebaseAuthentication: {
