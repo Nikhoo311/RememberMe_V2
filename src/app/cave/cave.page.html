@@ -47,7 +47,7 @@
                   </ion-label>
                   <div slot="end" class="wine-right">
                     <span class="wine-loc">{{ formatCoords(slot) }}</span>
-                    <span class="wine-qty">{{ slot.wine.placements?.length || 1 }} {{ 'COMMON.BOTTLES_SHORT' | transloco }}</span>
+                    <span class="wine-qty">{{ slot.wine.placements.length }} {{ 'COMMON.BOTTLES_SHORT' | transloco }}</span>
                   </div>
                 </ion-item>
               } @else {
