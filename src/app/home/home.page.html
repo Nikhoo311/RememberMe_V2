@@ -30,7 +30,8 @@
       }
 
       <ion-col size="6">
-        <ion-card class="bento-card">
+        <ion-card class="bento-card ion-activatable ripple-parent" (click)="goToCave()">
+          <ion-ripple-effect></ion-ripple-effect>
           <ion-card-title class="bento-label">{{ 'HOME.TOTAL_STOCK_LABEL' | transloco }}</ion-card-title>
           @if (totalBottles > 0) {
             <div class="bento-kpi">{{ totalBottles | number }}</div>

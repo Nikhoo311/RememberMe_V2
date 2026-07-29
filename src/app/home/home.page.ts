@@ -76,4 +76,8 @@ export class HomePage implements OnInit {
   goToStats(): void {
     this.router.navigate(['/stats']);
   }
+
+  goToCave(): void {
+    this.router.navigate(['/cave']);
+  }
 }
